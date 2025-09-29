@@ -44,10 +44,16 @@ public class PostRepository {
 
 
     public List<Post> getRecentPosts(int count, int offset) {
-        return POSTS.subList(offset, Math.min(offset + count, POSTS.size()));
+        return POSTS.stream()
+                .filter(post -> post.getDeletedAt() == null)
+                .toList()
+                .subList(offset, Math.min(offset + count, POSTS.size()));
     }
 
     public Post save(Post post) {
+        post.setId(this.getNextId());
+        post.setCreatedAt(LocalDateTime.now());
+
         POSTS.add(post);
         return post;
     }
@@ -67,7 +73,11 @@ public class PostRepository {
     }
 
     public List<Post> getAll() {
-        return POSTS;
+        return POSTS.stream().filter(post -> post.getDeletedAt() == null).toList();
+    }
+
+    private Long getNextId() {
+        return POSTS.stream().mapToLong(Post::getId).max().orElse(0L) + 1L;
     }
 
 }
