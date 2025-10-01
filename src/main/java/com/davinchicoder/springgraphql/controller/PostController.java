@@ -2,6 +2,7 @@ package com.davinchicoder.springgraphql.controller;
 
 import com.davinchicoder.springgraphql.dto.PostDto;
 import com.davinchicoder.springgraphql.entity.Post;
+import com.davinchicoder.springgraphql.exception.PostNotFound;
 import com.davinchicoder.springgraphql.mapper.PostMapper;
 import com.davinchicoder.springgraphql.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class PostController {
 
     @QueryMapping
     public Post getPostById(@Argument Long id) {
-        return postRepository.getById(id).orElseThrow(RuntimeException::new);
+        return postRepository.getById(id).orElseThrow(PostNotFound::new);
     }
 
     @QueryMapping
@@ -37,7 +38,7 @@ public class PostController {
     @MutationMapping
     public Post deletePostById(@Argument Long id) {
 
-        return postRepository.delete(id).orElseThrow(RuntimeException::new);
+        return postRepository.delete(id).orElseThrow(PostNotFound::new);
     }
 
     @MutationMapping
