@@ -51,9 +51,9 @@ La entidad principal que representa una publicación con los siguientes campos:
 - `content`: Contenido del post
 - `author`: Autor del post
 - `imageUrl`: URL de la imagen
-- : Fecha de creación `createdAt`
-- : Fecha de actualización `updatedAt`
-- : Fecha de eliminación (soft delete) `deletedAt`
+- `createdAt`: Fecha de creación 
+- `updatedAt`: Fecha de actualización 
+- `deletedAt`: Fecha de eliminación (soft delete) 
 
 ### 3. **PostDto**
 
@@ -126,6 +126,19 @@ query {
     title
     author
     createdAt
+  }
+}
+```
+
+### Query - Obtener un post
+
+``` graphql
+query {
+  getPostById(id: 1) {
+    id
+    title
+    content
+    author
   }
 }
 ```
